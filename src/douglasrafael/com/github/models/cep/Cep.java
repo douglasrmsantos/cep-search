@@ -1,4 +1,5 @@
-package douglasrafael.com.github.models;
+package douglasrafael.com.github.models.cep;
+
 
 public class Cep {
     private String cep;

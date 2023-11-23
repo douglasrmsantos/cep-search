@@ -1,39 +1,25 @@
+import douglasrafael.com.github.models.cep.CepService;
+
 import java.util.Scanner;
 
-import douglasrafael.com.github.models.Cep;
-import douglasrafael.com.github.models.ViaCepApiJson;
-
 public class CepSearchApp {
+    private static CepService cepService = new CepService();
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String cep = "";
+        String cep;
 
-        while (!cep.equalsIgnoreCase("exit")) {
+        do {
+            System.out.println("Type the CEP or exit: ");
+            cep = scanner.nextLine();
 
-            System.out.println("Type the CEP: ");
-            cep = scanner.nextLine().replace("-", "");
+            cepService.requestCep(cep);
 
             if (cep.equalsIgnoreCase("exit")) {
                 break;
             }
 
-            if (cep.length() != 8) {
-                System.out.println("CEP invalid.");
-                continue;
-            }
+        } while (!cep.equalsIgnoreCase("exit"));
 
-            String adress = "https://viacep.com.br/ws/" + cep + "/json/";
-
-            if (ViaCepApiJson.requestCep(adress).erro() == null) {
-                Cep cepFormated = new Cep(ViaCepApiJson.requestCep(adress));
-                System.out.println(ViaCepApiJson.requestCep(adress));
-                System.out.println(cepFormated);
-
-            } else {
-                System.out.println("CEP not found.");
-            }
-
-        }
         scanner.close();
     }
 }
